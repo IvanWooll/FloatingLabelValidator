@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FloatingLabelTextView">
+        <attr name="validationMessage" format="string" />
+        <attr name="hint" format="string" />
+        <attr name="allowEmpty" format="boolean" />
+        <attr name="validatorType" format="enum">
+            <enum name="alpha" value="0" />
+            <enum name="numeric" value="1" />
+            <enum name="alphaNumeric" value="2" />
+            <enum name="email" value="3" />
+            <enum name="phone" value="4" />
+        </attr>
+    </declare-styleable>
+</resources>
