@@ -9,6 +9,8 @@
     <com.fieldsoftware.floatinglabelvalidator.FloatingLabelTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:hint="username" />
+        app:hint="username"
+        app:allowEmpty="false"
+        app:validatorType="numeric" />
 
 </LinearLayout>

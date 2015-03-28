@@ -87,12 +87,4 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher {
     public void afterTextChanged(Editable s) {
 
     }
-
-//    public String validate(CharSequence s) {
-//        if (s.length() > 0) {
-//            return "";
-//        } else {
-//            return "must not be empty";
-//        }
-//    }
 }
