@@ -11,6 +11,6 @@
         android:layout_height="wrap_content"
         app:hint="username"
         app:allowEmpty="false"
-        app:validatorType="numeric" />
+        app:validatorType="phone" />
 
 </LinearLayout>
