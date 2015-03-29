@@ -65,6 +65,10 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher {
         green = getResources().getColor(android.R.color.holo_green_light);
         validator = new Validator(allowEmpty, validatorType);
 
+
+
+
+        
     }
 
     @Override
