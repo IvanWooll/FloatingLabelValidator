@@ -32,12 +32,13 @@ public class Validator {
     public String validate(CharSequence s) {
         mCharSequence = s;
         String result = "";
-        final StringBuilder sb = new StringBuilder(s.length());
-        sb.append(s);
-        mString = sb.toString();
+        mString = stringFromCharSequence(s);
         mChars = mString.toCharArray();
         if (mAllowEmpty && mValidatorType < 0) {
             return "";
+        }
+        if (mString.length() < 1) {
+            return " must not be empty";
         }
         switch (mValidatorType) {
             case ALPHA:
@@ -58,10 +59,10 @@ public class Validator {
             default:
                 break;
         }
-        result += validateNotEmpty();
+//        result += validateNotEmpty();
         return result;
-
     }
+
 
     private String validateNotEmpty() {
         if (mString.length() > 0) {
@@ -129,6 +130,14 @@ public class Validator {
         } else {
             return android.util.Patterns.PHONE.matcher(target).matches();
         }
+    }
+
+    private String stringFromCharSequence(CharSequence s) {
+        String str;
+        final StringBuilder sb = new StringBuilder(s.length());
+        sb.append(s);
+        str = sb.toString();
+        return str;
     }
 
 }

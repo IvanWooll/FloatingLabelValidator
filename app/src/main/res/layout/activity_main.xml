@@ -9,7 +9,35 @@
     <com.fieldsoftware.floatinglabelvalidator.FloatingLabelTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:hint="username"
+        app:hint="alpha"
+        app:allowEmpty="false"
+        app:validatorType="alpha" />
+
+    <com.fieldsoftware.floatinglabelvalidator.FloatingLabelTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hint="numeric"
+        app:allowEmpty="false"
+        app:validatorType="numeric" />
+
+    <com.fieldsoftware.floatinglabelvalidator.FloatingLabelTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hint="alpha numeric"
+        app:allowEmpty="false"
+        app:validatorType="alphaNumeric" />
+
+    <com.fieldsoftware.floatinglabelvalidator.FloatingLabelTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hint="email"
+        app:allowEmpty="false"
+        app:validatorType="email" />
+
+    <com.fieldsoftware.floatinglabelvalidator.FloatingLabelTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hint="phone number"
         app:allowEmpty="false"
         app:validatorType="phone" />
 
