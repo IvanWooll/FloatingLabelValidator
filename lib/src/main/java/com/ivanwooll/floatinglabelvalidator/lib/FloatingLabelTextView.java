@@ -1,4 +1,4 @@
-package com.fieldsoftware.floatinglabelvalidator;
+package com.ivanwooll.floatinglabelvalidator.lib;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -33,10 +33,7 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher, V
 
     public FloatingLabelTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray a = context.getTheme().obtainStyledAttributes(
-                attrs,
-                R.styleable.FloatingLabelTextView,
-                0, 0);
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs,R.styleable.FloatingLabelTextView, 0, 0);
         try {
             validationMessage = a.getString(R.styleable.FloatingLabelTextView_validationMessage);
             hintText = a.getString(R.styleable.FloatingLabelTextView_hint);

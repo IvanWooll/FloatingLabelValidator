@@ -1,4 +1,4 @@
-package com.fieldsoftware.floatinglabelvalidator;
+package com.ivanwooll.floatinglabelvalidator.lib;
 
 import android.text.TextUtils;
 
