@@ -6,7 +6,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -16,7 +15,6 @@ import android.widget.TextView;
  */
 public class FloatingLabelTextView extends FrameLayout implements TextWatcher {
     private EditText mEditText;
-    private TextView mTextViewHintBottom;
     private TextView mTextViewHintTop;
     private String validationMessage;
     private String hintText;
@@ -56,19 +54,14 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher {
     private void init() {
         inflate(getContext(), R.layout.floating_label_text_view, this);
         mTextViewHintTop = (TextView) findViewById(R.id.textViewHintTop);
-        mTextViewHintBottom = (TextView) findViewById(R.id.textViewHintBottom);
         mEditText = (EditText) findViewById(R.id.editText);
         mEditText.addTextChangedListener(this);
-        mTextViewHintBottom.setText(hintText);
         mTextViewHintTop.setText(hintText);
         red = getResources().getColor(android.R.color.holo_red_light);
         green = getResources().getColor(android.R.color.holo_green_light);
         validator = new Validator(allowEmpty, validatorType);
 
-
-
-
-        
+        mTextViewHintTop.setY(70);
     }
 
     @Override
@@ -78,8 +71,11 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        mTextViewHintBottom.setVisibility(s.length() > 0 ? View.INVISIBLE : View.VISIBLE);
-        mTextViewHintTop.setVisibility(s.length() > 0 ? View.VISIBLE : View.VISIBLE);
+        if (s.length() > 0) {
+            mTextViewHintTop.animate().translationY(0);
+        } else {
+            mTextViewHintTop.animate().translationY(70);
+        }
 
         validationMessage = validator.validate(s);
         boolean isValid = TextUtils.isEmpty(validationMessage);
