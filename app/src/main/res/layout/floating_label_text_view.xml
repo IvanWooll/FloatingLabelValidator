@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="5dp"
-        android:visibility="invisible"
         android:gravity="top" />
 
     <EditText
@@ -20,14 +19,5 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:layout_marginTop="16dp" />
-
-    <TextView
-        android:textSize="16sp"
-        android:id="@+id/textViewHintBottom"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom"
-        android:layout_marginLeft="5dp"
-        android:layout_marginBottom="12dp" />
 
 </FrameLayout>
