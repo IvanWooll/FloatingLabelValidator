@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -13,7 +14,7 @@ import android.widget.TextView;
 /**
  * Created by Ivan on 15/03/2015.
  */
-public class FloatingLabelTextView extends FrameLayout implements TextWatcher {
+public class FloatingLabelTextView extends FrameLayout implements TextWatcher, View.OnFocusChangeListener {
     private EditText mEditText;
     private TextView mTextViewHintTop;
     private String validationMessage;
@@ -21,6 +22,7 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher {
     private boolean allowEmpty;
     private int validatorType;
     private Validator validator;
+    private boolean isEmpty;
 
     private int red;
     private int green;
@@ -62,6 +64,8 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher {
         validator = new Validator(allowEmpty, validatorType);
 
         mTextViewHintTop.setY(70);
+        mEditText.setOnFocusChangeListener(this);
+        isEmpty = true;
     }
 
     @Override
@@ -71,12 +75,11 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (s.length() > 0) {
-            mTextViewHintTop.animate().translationY(0);
+        if (s.length() < 1) {
+            isEmpty = true;
         } else {
-            mTextViewHintTop.animate().translationY(70);
+            isEmpty = false;
         }
-
         validationMessage = validator.validate(s);
         boolean isValid = TextUtils.isEmpty(validationMessage);
         mTextViewHintTop.setTextColor(isValid ? green : red);
@@ -86,5 +89,17 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if (hasFocus) {
+            mTextViewHintTop.animate().translationY(0);
+        } else {
+            if (isEmpty) {
+                mTextViewHintTop.animate().translationY(70);
+            }
+
+        }
     }
 }
