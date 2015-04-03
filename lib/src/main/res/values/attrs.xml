@@ -11,5 +11,6 @@
             <enum name="email" value="3" />
             <enum name="phone" value="4" />
         </attr>
+        <attr name="textSize" format="integer" />
     </declare-styleable>
 </resources>

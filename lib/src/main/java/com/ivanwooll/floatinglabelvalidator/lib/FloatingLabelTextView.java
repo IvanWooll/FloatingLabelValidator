@@ -23,6 +23,7 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher, V
     private int validatorType;
     private Validator validator;
     private boolean isEmpty;
+    private int mMainTextSize;
 
     private int red;
     private int green;
@@ -33,12 +34,13 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher, V
 
     public FloatingLabelTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs,R.styleable.FloatingLabelTextView, 0, 0);
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.FloatingLabelTextView, 0, 0);
         try {
             validationMessage = a.getString(R.styleable.FloatingLabelTextView_validationMessage);
             hintText = a.getString(R.styleable.FloatingLabelTextView_hint);
             allowEmpty = a.getBoolean(R.styleable.FloatingLabelTextView_allowEmpty, true);
             validatorType = a.getInt(R.styleable.FloatingLabelTextView_validatorType, -1);
+            mMainTextSize = a.getInt(R.styleable.FloatingLabelTextView_textSize, 18);
         } finally {
             a.recycle();
         }
@@ -54,7 +56,9 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher, V
         inflate(getContext(), R.layout.floating_label_text_view, this);
         mTextViewHintTop = (TextView) findViewById(R.id.textViewHintTop);
         mEditText = (EditText) findViewById(R.id.editText);
+        mEditText.setTextSize((float) mMainTextSize);
         mEditText.addTextChangedListener(this);
+        mTextViewHintTop.setTextSize(mMainTextSize * .7f);
         mTextViewHintTop.setText(hintText);
         red = getResources().getColor(android.R.color.holo_red_light);
         green = getResources().getColor(android.R.color.holo_green_light);
@@ -72,11 +76,7 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher, V
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (s.length() < 1) {
-            isEmpty = true;
-        } else {
-            isEmpty = false;
-        }
+        isEmpty = s.length() < 1;
         validationMessage = validator.validate(s);
         boolean isValid = TextUtils.isEmpty(validationMessage);
         mTextViewHintTop.setTextColor(isValid ? green : red);
@@ -98,5 +98,9 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher, V
             }
 
         }
+    }
+
+    public Editable getText() {
+        return mEditText.getText();
     }
 }

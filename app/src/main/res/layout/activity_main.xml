@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         app:hint="alpha"
         app:allowEmpty="false"
-        app:validatorType="alpha" />
+        app:validatorType="alpha"
+        app:textSize="18" />
 
     <com.ivanwooll.floatinglabelvalidator.lib.FloatingLabelTextView
         android:layout_width="match_parent"
