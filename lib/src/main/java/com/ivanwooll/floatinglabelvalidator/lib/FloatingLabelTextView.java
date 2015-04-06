@@ -17,13 +17,14 @@ import android.widget.TextView;
 public class FloatingLabelTextView extends FrameLayout implements TextWatcher, View.OnFocusChangeListener {
     private EditText mEditText;
     private TextView mTextViewHintTop;
-    private String validationMessage;
-    private String hintText;
-    private boolean allowEmpty;
-    private int validatorType;
-    private Validator validator;
-    private boolean isEmpty;
+    private String mValidationMessage;
+    private String mHintText;
+    private boolean mAllowEmpty;
+    private int mValidatorType;
+    private Validator mValidator;
+    private boolean mIsEmpty;
     private int mMainTextSize;
+    private boolean mIsValid;
 
     private int red;
     private int green;
@@ -36,10 +37,10 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher, V
         super(context, attrs);
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.FloatingLabelTextView, 0, 0);
         try {
-            validationMessage = a.getString(R.styleable.FloatingLabelTextView_validationMessage);
-            hintText = a.getString(R.styleable.FloatingLabelTextView_hint);
-            allowEmpty = a.getBoolean(R.styleable.FloatingLabelTextView_allowEmpty, true);
-            validatorType = a.getInt(R.styleable.FloatingLabelTextView_validatorType, -1);
+            mValidationMessage = a.getString(R.styleable.FloatingLabelTextView_validationMessage);
+            mHintText = a.getString(R.styleable.FloatingLabelTextView_hint);
+            mAllowEmpty = a.getBoolean(R.styleable.FloatingLabelTextView_allowEmpty, true);
+            mValidatorType = a.getInt(R.styleable.FloatingLabelTextView_validatorType, -1);
             mMainTextSize = a.getInt(R.styleable.FloatingLabelTextView_textSize, 18);
         } finally {
             a.recycle();
@@ -59,14 +60,14 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher, V
         mEditText.setTextSize((float) mMainTextSize);
         mEditText.addTextChangedListener(this);
         mTextViewHintTop.setTextSize(mMainTextSize * .7f);
-        mTextViewHintTop.setText(hintText);
+        mTextViewHintTop.setText(mHintText);
         red = getResources().getColor(android.R.color.holo_red_light);
         green = getResources().getColor(android.R.color.holo_green_light);
-        validator = new Validator(allowEmpty, validatorType);
+        mValidator = new Validator(mAllowEmpty, mValidatorType);
 
         mTextViewHintTop.setY(70);
         mEditText.setOnFocusChangeListener(this);
-        isEmpty = true;
+        mIsEmpty = true;
     }
 
     @Override
@@ -76,11 +77,11 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher, V
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        isEmpty = s.length() < 1;
-        validationMessage = validator.validate(s);
-        boolean isValid = TextUtils.isEmpty(validationMessage);
-        mTextViewHintTop.setTextColor(isValid ? green : red);
-        mTextViewHintTop.setText(isValid ? hintText + "" : hintText + " - " + validationMessage);
+        mIsEmpty = s.length() < 1;
+        mValidationMessage = mValidator.validate(s);
+        mIsValid = TextUtils.isEmpty(mValidationMessage);
+        mTextViewHintTop.setTextColor(mIsValid ? green : red);
+        mTextViewHintTop.setText(mIsValid ? mHintText + "" : mHintText + " - " + mValidationMessage);
     }
 
     @Override
@@ -93,7 +94,7 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher, V
         if (hasFocus) {
             mTextViewHintTop.animate().translationY(0);
         } else {
-            if (isEmpty) {
+            if (mIsEmpty) {
                 mTextViewHintTop.animate().translationY(70);
             }
 
@@ -102,5 +103,9 @@ public class FloatingLabelTextView extends FrameLayout implements TextWatcher, V
 
     public Editable getText() {
         return mEditText.getText();
+    }
+
+    public boolean isValid() {
+        return mIsValid;
     }
 }
